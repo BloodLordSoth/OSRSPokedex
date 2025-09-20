@@ -1,14 +1,14 @@
 import puppeteer from 'puppeteer'
-import chromium from '@sparticuz/chromium'
 
 export async function scrape(url){
     const browser = await puppeteer.launch({
-        headless: chromium.headless,
-        args: chromium.args,
-        defaultViewport: chromium.defaultViewport,
-        executablePath: await chromium.executablePath()
+        headless: true,
+        args: ['--no-sandbox',
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        ]
     });
-    
+
     const page = await browser.newPage()
     await page.goto(url)
 
@@ -31,7 +31,6 @@ export async function scrape(url){
     }
     
     
-    //console.log(arr)
     await browser.close()
     return arr
 }
