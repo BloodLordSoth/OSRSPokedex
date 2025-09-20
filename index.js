@@ -1,10 +1,14 @@
 import puppeteer from 'puppeteer'
+import chromium from '@sparticuz/chromium'
 
 export async function scrape(url){
     const browser = await puppeteer.launch({
-        headless: true,
-        args: ['--no-sandbox']
-    })
+        headless: chromium.headless,
+        args: chromium.args,
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath()
+    });
+    
     const page = await browser.newPage()
     await page.goto(url)
 
